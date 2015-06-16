@@ -3,16 +3,24 @@
 <h1>Listing Questions</h1>
 
 
-<div class="question-list">
-<% @questions.each do |question| %>
-  <li><%= question.title %></li>
-  <span><%= question.description.truncate(100) %></span><br/>
-  <span><%= link_to 'Show', question %></span>
-  <span><%= link_to 'Edit', edit_question_path(question) %></span>
-  <span><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></span>
-  <hr/>
-<% end %>
-
+<div>
+<ol>  
+  <% @questions.each do |question| %>
+    <li class="question-list"><%= question.title %></li>
+    <span><%= question.description.truncate(100) %></span><br/>
+    <h3>Answers: </h3>
+    <ol>
+      <% question.answers.each do |answer| %>
+        <li><%= answer.description %></li>
+      <% end %>
+    </ol>
+    <span><%= link_to 'Show', question %></span>
+    <span><%= link_to 'Edit', edit_question_path(question) %></span>
+    <span><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></span>
+    <hr/>
+  <% end %>
+</ol>
+<%= paginate @questions %>
 <br>
 
 <%= link_to 'New Question', new_question_path %>
